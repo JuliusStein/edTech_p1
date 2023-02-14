@@ -50,13 +50,12 @@ framerate = 60
 bg_speed = 100
 
 # Load the background image here. Make sure the file exists!
-Field = ScrollingBackground(screenheight, "background.png")
-Cannon = MainCharacter(screenheight, screenwidth, "cannon.png")
+Field = ScrollingBackground(screenheight, r".\background.png")
+Cannon = MainCharacter(screenheight, screenwidth, r".\background.png")
 
 pygame.mouse.set_visible(0)
 pygame.display.set_caption('Save the Earth!')
 
-# fix indentation
 while True:
     time = clock.tick(framerate)/1000.0
     x, y = pygame.mouse.get_pos()

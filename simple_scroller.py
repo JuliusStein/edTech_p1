@@ -47,16 +47,19 @@ class Player:
     def update(self, gameObjects):
         cord = pygame.mouse.get_pos()
         angle = atan2(600-cord[1], cord[0])
-        self.x = radius * cos(angle)
-        self.y = 600 - radius * sin(angle)
+        #self.x = radius * cos(angle)
+        #self.y = 600 - radius * sin(angle)
+        self.x = cord[0]
+        self.y = cord[1]
         for gameObj in gameObjects:
             if gameObj.type == "ball":
                 if (gameObj.x - self.x)**2 + (gameObj.y - self.y)**2 <= (gameObj.radius + self.radius)**2:
                     self.gameOver = True
                     
 class GameController:
-    def __init__(self, interval = 5):
+    def __init__(self, interval = 5, difficulty = 1):
         self.inter = interval
+        self.difficulty = difficulty
         self.next = pygame.time.get_ticks() + (2 * 1000)
         self.type = "game controller"
         self.score = 0
@@ -64,7 +67,7 @@ class GameController:
 
     def update(self, gameObjects):
         if self.next < pygame.time.get_ticks():
-            self.next = pygame.time.get_ticks() + (self.inter * 1000)
+            self.next = pygame.time.get_ticks() + (self.inter/self.difficulty * 1000)
             gameObjects.append(Ball(xVel=random()*2, yVel=random()*2))
             self.score += 1
 
@@ -77,7 +80,7 @@ class game():
         self.screen = pygame.display.set_mode(resolution)
         self.clock = pygame.time.Clock()
         self.gameObjects = []
-        self.gameObjects.append(GameController())
+        self.gameObjects.append(GameController(difficulty=5))
         self.gameObjects.append(Player())
         self.gameOver = False
 
